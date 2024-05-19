@@ -39,15 +39,15 @@
 -- Add comments for better documentation
 \i ./schema/add_comments.sql
 
--- -- Seed initial data
--- \i ./seeds/users_seed.sql
--- \i ./seeds/exercises_seed.sql
--- \i ./seeds/muscles_seed.sql
--- \i ./seeds/exercises_muscles_seed.sql
--- \i ./seeds/programs_seed.sql
--- \i ./seeds/program_splits_seed.sql
--- \i ./seeds/programs_exercises_seed.sql
--- \i ./seeds/user_programs_seed.sql
--- \i ./seeds/workouts_seed.sql
--- \i ./seeds/session_exercises_seed.sql
--- \i ./seeds/progress_tracking_seed.sql
+-- Seed initial data
+\i ./seeds/users_seed.sql
+\i ./seeds/exercises_seed.sql
+\i ./seeds/muscles_seed.sql
+\i ./seeds/exercises_muscles_seed.sql
+\i ./seeds/programs_seed.sql
+\i ./seeds/program_splits_seed.sql
+\i ./seeds/programs_exercises_seed.sql
+\i ./seeds/user_programs_seed.sql
+\i ./seeds/workouts_seed.sql
+\i ./seeds/session_exercises_seed.sql
+\i ./seeds/progress_tracking_seed.sql
