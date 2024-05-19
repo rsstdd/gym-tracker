@@ -1,4 +1,4 @@
-use actix_web::{web, HttpResponse, Responder};
+use actix_web::{web, HttpResponse};
 use sqlx::PgPool;
 use crate::models::Users;
 
@@ -12,7 +12,7 @@ pub async fn get_all_users(pool: web::Data<PgPool>) -> HttpResponse {
     .await;
 
     match result {
-        Ok(Users) => HttpResponse::Ok().json(Users),
+        Ok(users) => HttpResponse::Ok().json(users),
         Err(_) => HttpResponse::InternalServerError().finish(),
     }
 }

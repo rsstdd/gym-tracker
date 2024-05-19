@@ -2,9 +2,9 @@
 
 This schema provides a comprehensive structure for tracking user progress, managing predefined and custom workout programs, and monitoring exercise performance and exertion levels.
 
-### 1. Users Table
+## 1. Users Table
 
-#### Purpose: Stores information about the users of the application
+### Purpose: Stores information about the users of the application
 
 - **id**: SERIAL PRIMARY KEY
 - **username**: VARCHAR(255) NOT NULL UNIQUE
@@ -210,9 +210,22 @@ pg_restore -U rsstdd -d gym_track -v ./backup/gym_track.backup
 psql -U rsstdd -d gym_track -c "\dt"
 
 # Describe the structure of a specific table (e.g., exercises)
-psql -U rsstdd -d gym_track -c "\d exercises"
-psql -U rsstdd -d gym_track -c "\d muscles"
-psql -U rsstdd -d gym_track -c "\d users_programs"
+psql -U rsstdd -d gym_track -c "SELECT * FROM exercises;"
+psql -U rsstdd -d gym_track -c "SELECT * FROM muscles;"
+psql -U rsstdd -d gym_track -c "SELECT * FROM users_programs;"
+
+psql -U rsstdd -d gym_track -c "SELECT * FROM muscles;"
+psql -U rsstdd -d gym_track -c "SELECT * FROM exercises;"
+psql -U rsstdd -d gym_track -c "SELECT * FROM exercises_muscles;"
+psql -U rsstdd -d gym_track -c "SELECT * FROM users;"
+psql -U rsstdd -d gym_track -c "SELECT * FROM programs;"
+psql -U rsstdd -d gym_track -c "SELECT * FROM programs_split;"
+psql -U rsstdd -d gym_track -c "SELECT * FROM programs_exercises;"
+psql -U rsstdd -d gym_track -c "SELECT * FROM progress_tracking;"
+
+psql -U rsstdd -d gym_track -c "SELECT * FROM workouts;"
+psql -U rsstdd -d gym_track -c "SELECT * FROM workouts_exercises;"
+psql -U rsstdd -d gym_track -c "SELECT * FROM users_programs;"
 
 
 psql -U rsstdd -d gym_track -c "SELECT COUNT(*) FROM exercises;"
