@@ -4,12 +4,16 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-crux_core = "0.7"
-crux_http = "0.9"
-tokio = { version = "1.0", features = ["full"] }
-sqlx = { version = "0.7.4", features = ["postgres", "macros"] }
-serde = { version = "1.0", features = ["derive"] }
 actix-rt = "2.5"
 actix-web = "4.0"
+chrono = { version = "0.4", features = ["serde"] }
+crux_core = "0.7"
+crux_http = "0.9"
 dotenv = "0.15"
-chrono = "0.4"
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+sqlx = { version = "0.7.4", features = ["postgres", "runtime-tokio-rustls", "macros", "time"] }
+tokio = { version = "1.0", features = ["full"] }
+
+[dev-dependencies]
+dotenv = "0.15"  # dotenv for loading environment variables
