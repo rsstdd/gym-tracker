@@ -1,0 +1,84 @@
+# Node and general dependencies
+/node_modules
+/dist
+/build
+.DS_Store
+*.log
+
+# Rust specific
+/target
+**/*.rs.bk
+
+# Database-related files
+*.sqlite
+*.sqlite3
+*.db
+*.db3
+*.pdb
+
+# PostgreSQL specific
+pgdata/
+pg_log/
+pg_wal/
+postgresql.auto.conf
+
+# Environment variables
+.env
+.env.*
+
+# Rust package manager files
+Cargo.lock
+Cargo.toml.orig
+
+# Ignore compiled binaries
+/debug
+/release
+*.o
+*.so
+*.exec
+*.dylib
+*.dll
+*.exe
+
+# Visual Studio Code
+.vscode/
+.history/
+*.code-workspace
+
+# Mac OS specific
+*.DS_Store
+
+# Linux specific
+*~
+
+# Windows specific
+Thumbs.db
+*.bak
+*.swp
+
+# Log files
+*.log
+*.out
+
+# Other IDEs and editors
+.idea/
+*.iml
+
+# Ignore local files and directories
+/local/
+*.local
+
+# Ignore temporary files
+/tmp/
+*.tmp
+*.temp
+
+# Ignore backup files
+*.bak
+*.old
+
+# Ignore generated documentation
+/target/doc/
+
+# Ignore build artifacts and intermediate files
+build/

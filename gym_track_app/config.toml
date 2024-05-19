@@ -1,0 +1,2 @@
+[database]
+url = "postgres://rsstdd:@localhost/gym_track"
