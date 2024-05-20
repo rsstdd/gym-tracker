@@ -1,7 +1,6 @@
 use actix_web::{web, HttpResponse};
 use sqlx::PgPool;
 use crate::models::Exercises;
-use serde::Serialize; // Add this import
 
 pub async fn get_all_exercises(pool: web::Data<PgPool>) -> HttpResponse {
     let result = sqlx::query_as!(
@@ -33,15 +32,24 @@ pub async fn get_exercise_by_id(pool: web::Data<PgPool>, exercise_id: web::Path<
 }
 
 pub async fn create_exercise(pool: web::Data<PgPool>, exercise: web::Json<Exercises>) -> HttpResponse {
-    let result = sqlx::query!(
-        "INSERT INTO exercises (name, description, equipment, difficulty_level) VALUES ($1, $2, $3, $4) RETURNING id, name, description, equipment, difficulty_level",
+    let result = sqlx::query_as!(
+        Exercises,
+        r#"
+            INSERT INTO exercises (
+                name,
+                description,
+                equipment,
+                difficulty_level
+            ) VALUES ($1, $2, $3, $4)
+            RETURNING id, name, description, equipment, difficulty_level
+        "#,
         exercise.name, exercise.description, exercise.equipment, exercise.difficulty_level
     )
     .fetch_one(pool.get_ref())
     .await;
 
     match result {
-        Ok(new_exercise) => HttpResponse::Created().json(result),
+        Ok(new_exercise) => HttpResponse::Created().json(new_exercise),
         Err(_) => HttpResponse::InternalServerError().finish(),
     }
 }
