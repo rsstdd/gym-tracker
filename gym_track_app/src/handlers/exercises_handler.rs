@@ -1,22 +1,15 @@
 use actix_web::{web, HttpResponse};
-use sqlx::PgPool;
-use crate::models::Exercises;
+use crate::{dbaccess::exercises::get_all_exercises_db, errors::GymTrackError, models::{types::{DbPool, Id}, AppState, Exercises}};
 
-pub async fn get_all_exercises(pool: web::Data<PgPool>) -> HttpResponse {
-    let result = sqlx::query_as!(
-        Exercises,
-        "SELECT id, name, description, equipment, difficulty_level FROM exercises"
-    )
-    .fetch_all(pool.get_ref())
-    .await;
-
-    match result {
-        Ok(exercises) => HttpResponse::Ok().json(exercises),
-        Err(_) => HttpResponse::InternalServerError().finish(),
-    }
+pub async fn get_all_exercises(
+    app_state: web::Data<AppState>
+) -> Result<HttpResponse, GymTrackError> {
+    get_all_exercises_db(&app_state.db)
+        .await
+        .map(|c| HttpResponse::Ok().json(c))
 }
 
-pub async fn get_exercise_by_id(pool: web::Data<PgPool>, exercise_id: web::Path<i32>) -> HttpResponse {
+pub async fn get_exercise_by_id(pool: DbPool, exercise_id: Id) -> HttpResponse {
     let result = sqlx::query_as!(
         Exercises,
         "SELECT id, name, description, equipment, difficulty_level FROM exercises WHERE id = $1",
@@ -31,7 +24,7 @@ pub async fn get_exercise_by_id(pool: web::Data<PgPool>, exercise_id: web::Path<
     }
 }
 
-pub async fn create_exercise(pool: web::Data<PgPool>, exercise: web::Json<Exercises>) -> HttpResponse {
+pub async fn create_exercise(pool: DbPool, exercise: web::Json<Exercises>) -> HttpResponse {
     let result = sqlx::query_as!(
         Exercises,
         r#"
@@ -54,7 +47,7 @@ pub async fn create_exercise(pool: web::Data<PgPool>, exercise: web::Json<Exerci
     }
 }
 
-pub async fn delete_exercise(pool: web::Data<PgPool>, exercise_id: web::Path<i32>) -> HttpResponse {
+pub async fn delete_exercise(pool: DbPool, exercise_id: Id) -> HttpResponse {
     let result = sqlx::query!("DELETE FROM exercises WHERE id = $1", exercise_id.into_inner())
         .execute(pool.get_ref())
         .await;

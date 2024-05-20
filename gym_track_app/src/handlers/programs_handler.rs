@@ -1,8 +1,13 @@
-use actix_web::{web, HttpResponse};
+use actix_web::HttpResponse;
 use sqlx::PgPool;
-use crate::models::{Programs, ProgramsSplits, ProgramsExercises};
+use crate::models::{
+    Programs,
+    ProgramsSplits,
+    ProgramsExercises,
+    types::{DbPool, Id}
+};
 
-pub async fn get_all_programs(pool: web::Data<PgPool>) -> HttpResponse {
+pub async fn get_all_programs(pool: DbPool) -> HttpResponse {
     let result = sqlx::query_as!(
         Programs,
         r#"
@@ -21,16 +26,14 @@ pub async fn get_all_programs(pool: web::Data<PgPool>) -> HttpResponse {
         .await;
 
     match result {
-        Ok(programs) => HttpResponse::Ok().json(programs),
+        Ok(p) => HttpResponse::Ok().json(p),
         Err(_) => HttpResponse::InternalServerError().finish(),
     }
 }
 
-pub async fn get_program_by_id(
-    pool: &PgPool,
-    program_id: i32
-) -> Result<Programs, sqlx::Error> {
-    let program = sqlx::query_as!(
+pub async fn get_program_by_id(pool:DbPool, program_id: Id) -> HttpResponse {
+    let id = program_id.into_inner();
+    let result = sqlx::query_as!(
         Programs,
         r#"
         SELECT
@@ -45,12 +48,15 @@ pub async fn get_program_by_id(
         WHERE
             id = $1
         "#,
-        program_id
+        id
     )
-    .fetch_one(pool)
-    .await?;
+    .fetch_one(pool.get_ref())
+    .await;
 
-    Ok(program)
+    match result {
+        Ok(p) => HttpResponse::Ok().json(p),
+        Err(_) => HttpResponse::InternalServerError().finish(),
+    }
 }
 
 pub async fn insert_program(
@@ -89,8 +95,8 @@ pub async fn insert_program(
 }
 
 pub async fn get_program_splits(
-    pool: web::Data<PgPool>,
-    program_id: web::Path<i32>
+    pool:DbPool,
+    program_id: Id
 ) -> Result<HttpResponse, actix_web::Error> {
     let id: i32 = program_id.into_inner();
     let program = sqlx::query_as!(
@@ -163,10 +169,9 @@ pub async fn delete_program(pool: &PgPool, program_id: i32) -> Result<(), sqlx::
     Ok(())
 }
 
-
 pub async fn get_program_exercises(
-    pool: web::Data<PgPool>,
-    split_id: web::Path<i32>
+    pool: DbPool,
+    split_id: Id
 ) -> HttpResponse {
     let id: i32 = split_id.into_inner();
     let result: Result<_, _> = sqlx::query_as!(
