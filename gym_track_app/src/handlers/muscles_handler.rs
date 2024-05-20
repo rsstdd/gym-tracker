@@ -33,7 +33,10 @@ pub async fn create_muscle(pool: web::Data<PgPool>, muscle: web::Json<Muscles>) 
     .await;
 
     match result {
-        Ok(new_muscle) => HttpResponse::Created().json(new_muscle),
+        Ok(record) => HttpResponse::Created().json(Muscles {
+            id: record.id,
+            name: record.name,
+        }),
         Err(_) => HttpResponse::InternalServerError().finish(),
     }
 }

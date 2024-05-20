@@ -3,8 +3,8 @@
 TRUNCATE TABLE programs RESTART IDENTITY;
 -- Insert seed data with predefined and custom programs
 INSERT INTO programs (
-    name,
-    type,
+    programs_name,
+    programs_type,
     description,
     duration_weeks,
     created_by_user_id

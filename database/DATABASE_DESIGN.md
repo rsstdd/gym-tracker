@@ -171,21 +171,12 @@ psql -U rsstdd -d gym_track -f ./schema/exercises.sql
 psql -U rsstdd -d gym_track -f ./schema/exercises_muscles.sql
 psql -U rsstdd -d gym_track -f ./schema/users.sql
 psql -U rsstdd -d gym_track -f ./schema/programs.sql
-psql -U rsstdd -d gym_track -f ./schema/programs_split.sql
+psql -U rsstdd -d gym_track -f ./schema/programs_splits.sql
 psql -U rsstdd -d gym_track -f ./schema/programs_exercises.sql
 psql -U rsstdd -d gym_track -f ./schema/progress_tracking.sql
 psql -U rsstdd -d gym_track -f ./schema/workouts.sql
 psql -U rsstdd -d gym_track -f ./schema/workouts_exercises.sql
 psql -U rsstdd -d gym_track -f ./schema/users_programs.sql
-
-# Add constraints to the tables
-psql -U rsstdd -d gym_track -f ./schema/add_constraints.sql
-
-# Add indexes to the tables
-psql -U rsstdd -d gym_track -f ./schema/add_indexes.sql
-
-# Add comments to the schema
-psql -U rsstdd -d gym_track -f ./schema/add_comments.sql
 
 # Seed the database with initial data
 psql -U rsstdd -d gym_track -f ./seeds/users_seed.sql
@@ -199,6 +190,15 @@ psql -U rsstdd -d gym_track -f ./seeds/users_programs_seed.sql
 psql -U rsstdd -d gym_track -f ./seeds/workouts_seed.sql
 psql -U rsstdd -d gym_track -f ./seeds/workouts_exercises_seed.sql
 psql -U rsstdd -d gym_track -f ./seeds/progress_tracking_seed.sql
+
+# Add constraints to the tables
+psql -U rsstdd -d gym_track -f ./schema/add_constraints.sql
+
+# Add indexes to the tables
+psql -U rsstdd -d gym_track -f ./schema/add_indexes.sql
+
+# Add comments to the schema
+psql -U rsstdd -d gym_track -f ./schema/add_comments.sql
 
 # Backup the database to a file
 pg_dump -U rsstdd -d gym_track -F c -b -v -f ./backup/gym_track.backup

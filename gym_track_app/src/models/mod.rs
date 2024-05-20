@@ -9,4 +9,5 @@ pub mod workout;
 
 pub use exercises::Exercises;
 pub use muscles::Muscles;
-pub use users::{Users};
+pub use programs::{Programs, ProgramsSplits, ProgramsExercises};
+pub use users::Users;

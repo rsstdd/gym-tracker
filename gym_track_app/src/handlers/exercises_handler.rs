@@ -1,6 +1,7 @@
 use actix_web::{web, HttpResponse};
 use sqlx::PgPool;
 use crate::models::Exercises;
+use serde::Serialize; // Add this import
 
 pub async fn get_all_exercises(pool: web::Data<PgPool>) -> HttpResponse {
     let result = sqlx::query_as!(
@@ -40,7 +41,7 @@ pub async fn create_exercise(pool: web::Data<PgPool>, exercise: web::Json<Exerci
     .await;
 
     match result {
-        Ok(new_exercise) => HttpResponse::Created().json(new_exercise),
+        Ok(new_exercise) => HttpResponse::Created().json(result),
         Err(_) => HttpResponse::InternalServerError().finish(),
     }
 }

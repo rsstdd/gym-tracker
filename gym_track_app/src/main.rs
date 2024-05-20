@@ -27,9 +27,9 @@ async fn main() -> std::io::Result<()> {
             .route("/programs", web::get().to(handlers::get_all_programs))
             .route("/programs/{id}/splits", web::get().to(handlers::get_program_splits))
             .route("/splits/{id}/exercises", web::get().to(handlers::get_program_exercises))
-            .route("/workouts", web::get().to(handlers::get_all_workouts))
-            .route("/workouts/{id}/exercises", web::get().to(handlers::get_workout_exercises))
-            .route("/log_progress", web::post().to(handlers::log_progress))
+            // .route("/workouts", web::get().to(handlers::get_all_workouts))
+            // .route("/workouts/{id}/exercises", web::get().to(handlers::get_workout_exercises))
+            // .route("/log_progress", web::post().to(handlers::log_progress))
         })
     .bind("127.0.0.1:8080")?
     .run()

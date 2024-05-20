@@ -1,11 +1,8 @@
--- Seed data for the programs_splits table
--- Ensure the table is empty before seeding
 TRUNCATE TABLE workouts,
 programs_exercises,
-programs_split,
+programs_splits,
 workouts_exercises RESTART IDENTITY;
--- Insert seed data with splits/sessions for each program
-INSERT INTO programs_split (programs_id, name, day_of_week)
+INSERT INTO programs_splits (programs_id, programs_name, day_of_week)
 VALUES -- Beginner Strength Program (program_id 1)
   (1, 'Day 1 - Upper Body', 1),
   (1, 'Day 2 - Lower Body', 3),
@@ -24,4 +21,4 @@ VALUES -- Beginner Strength Program (program_id 1)
   (4, 'Day 3 - Core', 6);
 -- Verify the inserted data
 SELECT *
-FROM programs_split;
+FROM programs_splits;
