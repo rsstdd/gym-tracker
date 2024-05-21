@@ -25,7 +25,7 @@ web::scope("/users")
     );
 }
 
-pub fn exercise_routes(cfg: &mut web::ServiceConfig) {
+pub fn exercises_routes(cfg: &mut web::ServiceConfig) {
     cfg.service(
         web::scope("/exercises")
         .route("", web::get().to(get_all_exercises))

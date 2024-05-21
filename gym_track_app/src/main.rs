@@ -2,7 +2,7 @@ use actix_web::{web, App, HttpServer};
 use dotenv::dotenv;
 use std::env;
 use std::sync::Mutex;
-
+use env_logger;
 
 mod errors;
 mod handlers;
@@ -18,6 +18,7 @@ use dbaccess::db;
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
     dotenv().ok();
+    env_logger::init();
     let host_port = env::var("HOST_PORT").expect("HOST:PORT address is not set in .env file");
     let database_url = env::var("DATABASE_URL").expect("DATABASE_URL must be set");
     let db_pool = db::establish_connection(&database_url).await.expect("Failed to create db_pool");

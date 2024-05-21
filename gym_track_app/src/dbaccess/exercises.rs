@@ -1,27 +1,29 @@
 use crate::errors::GymTrackError;
 use crate::models::Exercises;
 use sqlx::postgres::PgPool;
-use crate:: models::types::Id;
+use crate::models::types::Id;
 
 pub async fn get_all_exercises_db(pool: &PgPool) -> Result<Vec<Exercises>, GymTrackError> {
-    let exercises_rows: Vec<Exercises> = sqlx::query_as!(
+    let exercises_rows = sqlx::query_as!(
         Exercises,
         r#"SELECT * FROM exercises"#,
     )
     .fetch_all(pool)
-    .await?;
+    .await
+    .map_err(|e| GymTrackError::DBError(e.to_string()))?;
 
     Ok(exercises_rows)
 }
 
-pub async fn get_exercise_by_id_db(pool: &PgPool, exercise_id: Id) -> Result <Exercises, GymTrackError> {
+pub async fn get_exercise_by_id_db(pool: &PgPool, exercise_id: Id) -> Result<Exercises, GymTrackError> {
     let exercise = sqlx::query_as!(
         Exercises,
         "SELECT id, name, description, equipment, difficulty_level FROM exercises WHERE id = $1",
         exercise_id.into_inner()
     )
     .fetch_one(pool)
-    .await?;
+    .await
+    .map_err(|e| GymTrackError::DBError(e.to_string()))?;
 
     Ok(exercise)
 }
@@ -47,7 +49,8 @@ pub async fn create_exercise_db(
         exercise.difficulty_level
     )
     .fetch_one(pool)
-    .await?;
+    .await
+    .map_err(|e| GymTrackError::DBError(e.to_string()))?;
 
     Ok(new_exercise)
 }
@@ -60,7 +63,8 @@ pub async fn delete_exercise_db(
         "DELETE FROM exercises WHERE id = $1", exercise_id.into_inner()
     )
     .execute(pool)
-    .await?;
+    .await
+    .map_err(|e| GymTrackError::DBError(e.to_string()))?;
 
     Ok(format!("Deleted {:#?} record", exercise_row))
 }
