@@ -16,7 +16,10 @@ pub fn general_routes(cfg: &mut web::ServiceConfig) {
 }
 
 pub fn user_routes(cfg: &mut web::ServiceConfig) {
-    cfg.route("/users", web::get().to(get_all_users));
+    cfg.route("/users", web::get().to(get_all_users))
+        .route("/users/{id}", web::get().to(get_user_by_id))
+        .route("/users", web::post().to(create_user))
+        .route("/users/{id}", web::delete().to(delete_user));
 }
 
 pub fn exercises_routes(cfg: &mut web::ServiceConfig) {
