@@ -4,6 +4,24 @@
 
 This application is a comprehensive gym tracking system designed to help users monitor and manage their weightlifting workouts. It focuses on progressive overload and tracks detailed metrics for each workout session, supporting both strength and hypertrophy training programs.
 
+- [Key Features](#key-features)
+- [Core Functionalities](#core-functionalities)
+- [Database Schema](#database-schema)
+- [Installation](#installation)
+- [Configuration](#configuration)
+- [Running the Application](#running-the-application)
+- [Running Tests](#running-tests)
+- [API Endpoints](#api-endpoints)
+
+## Key Features
+
+- **Customizable Workouts**: Users can tailor their workout programs to their specific goals.
+- **Detailed Tracking**: Comprehensive tracking of workout metrics, including advanced exertion metrics.
+- **User Progress Monitoring**: Tools for tracking and analyzing user progress over time.
+- **Robust Data Management**: Ensures data integrity and reliability through a well-defined database schema and foreign key constraints.
+
+This gym tracking application provides users with the tools they need to effectively plan, track, and analyze their workouts, supporting their fitness journey with detailed insights and robust data management.
+
 ## Core Functionalities
 
 ### 1. User Management
@@ -51,45 +69,6 @@ The application uses a well-structured database schema, including the following 
 - **programs_split**: Divides programs into specific workout splits.
 - **progress_tracking**: Tracks user progress over time.
 
-## Key Features
-
-- **Customizable Workouts**: Users can tailor their workout programs to their specific goals.
-- **Detailed Tracking**: Comprehensive tracking of workout metrics, including advanced exertion metrics.
-- **User Progress Monitoring**: Tools for tracking and analyzing user progress over time.
-- **Robust Data Management**: Ensures data integrity and reliability through a well-defined database schema and foreign key constraints.
-
-This gym tracking application provides users with the tools they need to effectively plan, track, and analyze their workouts, supporting their fitness journey with detailed insights and robust data management.
-
-### Directory Structure
-
-```
-/project_root
-│
-├── /database
-│   ├── /schema
-│   │   ├── create_tables.sql
-│   │   ├── add_indexes.sql
-│   │   └── constraints.sql
-│   │
-│   ├── /seeds
-│   │   ├── users.sql
-│   │   ├── exercises.sql
-│   │   ├── muscles.sql
-│   │   ├── exercise_muscles.sql
-│   │   ├── programs.sql
-│   │   ├── program_splits.sql
-│   │   ├── program_exercises.sql
-│   │   ├── user_programs.sql
-│   │   ├── exercise_sessions.sql
-│   │   ├── session_exercises.sql
-│   │   └── progress_tracking.sql
-│   │
-│   └── init_db.sql
-│
-├── .gitignore
-└── README.md
-```
-
 ### Initializing the Database
 
 To set up the database, follow these steps:
@@ -110,6 +89,145 @@ To initialize the database, run the following command:
 psql -U rsstdd -d gym_track -f ./database/init_db.sql
 ```
 
-By following this README, users and developers alike can leverage the Gym Progress Tracker to its fullest potential, fostering improved fitness outcomes and seamless application development.
+## Installation
 
----
+To install and run the GymTrack App locally, follow these steps:
+
+1. **Clone the repository:**
+
+```bash
+git clone <https://github.com/yourusername/gym_track_app.git>
+cd gym_track_app
+```
+
+## Set up the environment
+
+## Install dependencies
+
+```sh
+cargo build
+```
+
+## configuration
+
+Create a .env file in the root directory with the following content, replacing the placeholders with your actual database
+
+```sh
+DATABASE_URL=postgres://username:password@localhost/gym_track
+HOST_PORT=localhost:8080
+```
+
+## Running the Application
+
+To run the application, use the following command:
+
+```bash
+cargo run
+```
+
+The application will start and be accessible at <http://localhost:8080>.
+
+## Running Tests
+
+To run the tests, use the following command:
+
+```sh
+cargo test
+```
+
+## API Endpoints
+
+### User Endpoints
+
+#### Get all users
+
+```sh
+URL: /api/users
+Method: GET
+Response: JSON array of users
+```
+
+### Get user by ID
+
+```sh
+URL: /api/users/{id}
+Method: GET
+Response: JSON object of the user
+```
+
+### Create a new user
+
+```sh
+URL: /api/users
+Method: POST
+Payload: JSON object of the user to create
+Response: JSON object of the created user
+```
+
+### Delete a user by ID
+
+```sh
+URL: /api/users/{id}
+Method: DELETE
+Response: JSON object of the deleted user
+```
+
+## Exercise Endpoints
+
+### Get all exercises
+
+```sh
+URL: /api/exercises
+Method: GET
+Response: JSON array of exercises
+```
+
+### Get exercise by ID
+
+```sh
+URL: /api/exercises/{id}
+Method: GET
+Response: JSON object of the exercise
+```
+
+### Create a new exercise
+
+```sh
+URL: /api/exercises
+Method: POST
+Payload: JSON object of the exercise to create
+Response: JSON object of the created exercise
+```
+
+### Delete an exercise by ID
+
+```sh
+URL: /api/exercises/{id}
+Method: DELETE
+Response: JSON object of the deleted exercise
+```
+
+## Models
+
+### User Model
+
+```rust
+pub struct Users {
+    pub id: Uuid,
+    pub username: String,
+    pub email: String,
+    pub password_hash: String,
+}
+```
+
+### Exercise Model
+
+```rust
+pub struct Exercises {
+    pub id: Uuid,
+    pub name: String,
+    pub description: String,
+    pub equipment: String,
+    pub difficulty_level: String,
+}
+```
