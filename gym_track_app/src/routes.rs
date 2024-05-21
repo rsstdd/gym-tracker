@@ -16,29 +16,41 @@ pub fn general_routes(cfg: &mut web::ServiceConfig) {
 }
 
 pub fn user_routes(cfg: &mut web::ServiceConfig) {
-    cfg.route("/users", web::get().to(get_all_users))
-        .route("/users/{id}", web::get().to(get_user_by_id))
-        .route("/users", web::post().to(create_user))
-        .route("/users/{id}", web::delete().to(delete_user));
+    cfg.service(
+web::scope("/users")
+        .route("", web::get().to(get_all_users))
+        .route("", web::post().to(create_user))
+        .route("/{id}", web::get().to(get_user_by_id))
+        .route("/{id}", web::delete().to(delete_user))
+    );
 }
 
-pub fn exercises_routes(cfg: &mut web::ServiceConfig) {
-    cfg.route("/exercises", web::get().to(get_all_exercises))
-        .route("/exercises/{id}", web::get().to(get_exercise_by_id))
-        .route("/exercises", web::post().to(create_exercise))
-        .route("/exercises/{id}", web::delete().to(delete_exercise));
+pub fn exercise_routes(cfg: &mut web::ServiceConfig) {
+    cfg.service(
+        web::scope("/exercises")
+        .route("", web::get().to(get_all_exercises))
+        .route("", web::post().to(create_exercise))
+        .route("/{id}", web::get().to(get_exercise_by_id))
+        .route("/{id}", web::delete().to(delete_exercise))
+    );
 }
 
 pub fn muscles_routes(cfg: &mut web::ServiceConfig) {
-    cfg.route("/muscles", web::get().to(get_all_muscles))
-        .route("/muscles/{id}", web::get().to(get_muscle_by_id))
-        .route("/muscles", web::post().to(create_muscle))
-        .route("/muscles/{id}", web::delete().to(delete_muscle));
+    cfg.service(
+        web::scope("/muscles")
+        .route("", web::get().to(get_all_muscles))
+        .route("/{id}", web::get().to(get_muscle_by_id))
+        .route("", web::post().to(create_muscle))
+        .route("/{id}", web::delete().to(delete_muscle))
+    );
 }
 
 pub fn programs_routes(cfg: &mut web::ServiceConfig) {
-    cfg.route("/programs", web::get().to(get_all_programs))
-        .route("/programs/{id}", web::get().to(get_program_by_id))
-        .route("/programs/{id}/splits", web::get().to(get_program_splits))
-        .route("/splits/{id}/exercises", web::get().to(get_program_exercises));
+    cfg.service(
+        web::scope("/programs")
+        .route("", web::get().to(get_all_programs))
+        .route("/{id}", web::get().to(get_program_by_id))
+        .route("/{id}/splits", web::get().to(get_program_splits))
+        .route("/splits/{id}/exercises", web::get().to(get_program_exercises))
+    );
 }
