@@ -1,0 +1,19 @@
+name = "GymTrack"
+description = "Gym Tracking Application"
+authors = ["Ross Todd"]
+repository = "https://github.com/rsstdd/gym-tracker"
+
+[cores.shared]
+source = "shared"
+type_gen = "shared_types"
+crux_version = "0.6.3"
+
+[shells.iOS]
+template = "iOS"
+source = "iOS"
+cores = ["shared"]
+
+[shells.web]
+template = "web"
+source = "web"
+cores = ["shared"]

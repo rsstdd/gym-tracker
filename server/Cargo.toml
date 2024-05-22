@@ -19,5 +19,5 @@ tokio = { version = "1.0", features = ["full"] }
 uuid = "1.8.0"
 
 [dev-dependencies]
-dotenv = "0.15"  # dotenv for loading environment variables
+dotenv = "0.15"
 mockall = "0.12.1"

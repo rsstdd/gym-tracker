@@ -1,0 +1,22 @@
+[workspace]
+members = [
+    "shared_types",
+    "shared",
+    "web",
+]
+resolver = "1"
+
+[workspace.package]
+authors = ["Ross Todd"]
+edition = "2021"
+repository = "https://github.com/rsstdd/gymtrack/"
+rust-version = "1.66"
+
+[workspace.dependencies]
+anyhow = "1.0.83"
+crux_core = "0.7"
+crux_http = "0.9"
+serde = "1.0.201"
+
+[workspace.metadata.bin]
+cargo-xcode = { version = "=1.7.0" }
