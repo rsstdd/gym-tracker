@@ -11,8 +11,6 @@ pub use crux_http as http;
 pub use app::*;
 pub use capabilities::sse;
 
-// TODO hide this plumbing
-
 uniffi::include_scaffolding!("shared");
 
 lazy_static! {

@@ -1,6 +1,5 @@
 mod core;
 mod http;
-mod sse;
 
 use crate::core::{Core, Message};
 use shared::Event;
@@ -16,7 +15,7 @@ impl Component for RootComponent {
     type Properties = ();
 
     fn create(ctx: &Context<Self>) -> Self {
-        ctx.link().send_message(Message::Event(Event::StartWatch));
+        ctx.link().send_message(Message::Event(Event::LoadUserData));
 
         Self { core: core::new() }
     }
@@ -35,27 +34,13 @@ impl Component for RootComponent {
     }
 
     fn view(&self, ctx: &Context<Self>) -> Html {
-        let link = ctx.link();
         let view = self.core.view();
 
         html! {
             <>
                 <section class="section has-text-centered">
-                    <h1 class="title">{"Crux Counter Example"}</h1>
-                    <p class="is-size-5">{"Rust Core, Rust Shell (Yew)"}</p>
-                </section>
-                <section class="container has-text-centered">
-                    <p class="is-size-5">{&view.text}</p>
-                    <div class="buttons section is-centered">
-                        <button class="button is-primary is-warning"
-                            onclick={link.callback(|_| Message::Event(Event::Decrement))}>
-                            {"Decrement"}
-                        </button>
-                        <button class="button is-primary is-danger"
-                            onclick={link.callback(|_| Message::Event(Event::Increment))}>
-                            {"Increment"}
-                        </button>
-                    </div>
+                    <h1 class="title">{"User Info"}</h1>
+                    <p class="is-size-5">{&view.user.name}</p>
                 </section>
             </>
         }

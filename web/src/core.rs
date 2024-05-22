@@ -1,10 +1,9 @@
-use futures_util::TryStreamExt;
 use gloo_console::log;
 use shared::{App, Capabilities, Effect, Event};
 use std::rc::Rc;
 use yew::{platform::spawn_local, Callback};
 
-use crate::{http, sse};
+use crate::http;
 
 pub type Core = Rc<shared::Core<Effect, App>>;
 
@@ -40,23 +39,6 @@ pub fn process_effect(core: &Core, effect: Effect, callback: &Callback<Message>)
 
                     for effect in core.resolve(&mut request, response.into()) {
                         process_effect(&core, effect, &callback);
-                    }
-                }
-            });
-        }
-
-        Effect::ServerSentEvents(mut request) => {
-            spawn_local({
-                let core = core.clone();
-                let callback = callback.clone();
-
-                async move {
-                    let mut stream = sse::request(&request.operation).await.unwrap();
-
-                    while let Ok(Some(response)) = stream.try_next().await {
-                        for effect in core.resolve(&mut request, response) {
-                            process_effect(&core, effect, &callback);
-                        }
                     }
                 }
             });
