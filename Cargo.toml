@@ -3,6 +3,7 @@ members = [
     "shared_types",
     "shared",
     "web",
+    "server",
 ]
 resolver = "1"
 
@@ -14,7 +15,7 @@ rust-version = "1.66"
 
 [workspace.dependencies]
 anyhow = "1.0.83"
-crux_core = "0.7"
+crux_core = "0.8.0"
 crux_http = "0.9"
 serde = "1.0.201"
 

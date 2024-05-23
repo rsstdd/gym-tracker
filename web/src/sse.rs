@@ -10,7 +10,8 @@
 // pub async fn request(
 //     SseRequest { url }: &SseRequest,
 // ) -> Result<impl stream::TryStream<Ok = SseResponse, Error = JsValue>> {
-//     let response = http::Request::get(url).send().await?;
+//     let send = http::Request::get(url).send().await?;
+//     let response = send;
 
 //     let raw_body = response.body().unwrap_throw();
 //     let body = ReadableStream::from_raw(raw_body.dyn_into().unwrap_throw());
