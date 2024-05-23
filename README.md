@@ -18,8 +18,7 @@
     - [Responsive Web Application](#responsive-web-application)
   - [How to Run](#how-to-run)
     - [Setup the Database](#setup-the-database)
-    - [Build the Server](#build-the-server)
-    - [Run the Server](#run-the-server)
+    - [Build and Run the Server](#build-and-run-the-server)
     - [Build the Web Application](#build-the-web-application)
     - [Serve the Web Application](#serve-the-web-application)
   - [Acknowledgments](#acknowledgments)
@@ -88,24 +87,19 @@ Built with Yew, the web application offers a responsive and interactive user int
 Clone the Repository:
 
 ```bash
-git clone <repository-url>
-cd <repository-directory>
+git clone gh repo clone rsstdd/gym-tracker
+cd gym-tracker
 ```
 
 ### Setup the Database
 
 Navigate to the database directory and execute the SQL scripts to initialize and seed the database.
 
-### Build the Server
+### Build and Run the Server
 
 ```bash
 cd server
 cargo build
-```
-
-### Run the Server
-
-```bash
 cargo run
 ```
 
