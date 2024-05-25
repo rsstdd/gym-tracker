@@ -1,6 +1,10 @@
 use crux_core::render::Render;
 use crux_http::{Http, HttpError};
 use serde::{Deserialize, Serialize};
+use url::Url;
+use crate::capabilities::sse::ServerSentEvents;
+
+const API_URL: &str = "localhost:8080/users";
 
 #[derive(Default, Serialize)]
 pub struct Model {
@@ -44,17 +48,7 @@ impl crux_core::App for App {
     fn update(&self, msg: Self::Event, model: &mut Self::Model, caps: &Self::Capabilities) {
         match msg {
             Event::LoadUserData => {
-                let url = "/api/user";
-                caps.http.get(url).expect_json().send(Event::SetUser);
-            }
-            Event::SetUser(Ok(mut response)) => {
-                if let Some(user) = response.take_body() {
-                    model.user = Some(user);
-                    caps.render.render();
-                }
-            }
-            Event::SetUser(Err(e)) => {
-                eprintln!("Error fetching user data: {:?}", e);
+                caps.http.get(API_URL).expect_json().send(Event::Set);
             }
         }
     }

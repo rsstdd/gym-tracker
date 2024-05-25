@@ -5,6 +5,7 @@ mod sse;
 use crate::core::{Core, Message};
 use yew::{html, Component, Context, Html};
 // use gloo_console::log;
+use shared::Event;
 
 #[derive(Default)]
 pub struct RootComponent {
@@ -20,12 +21,13 @@ impl Component for RootComponent {
     }
 
     fn view(&self, _ctx: &Context<Self>) -> Html {
-        let _view = self.core.view();
+        let view = self.core.view();
 
         html! {
             <>
                 <section class="section has-text-centered">
                     <h1 class="title">{"User Info"}</h1>
+                    <p>{view.users}</p>
                 </section>
             </>
         }
